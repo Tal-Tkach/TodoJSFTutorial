@@ -1,0 +1,9 @@
+.myClass{
+    color: blue;
+}
+.validationMessage{
+    color: red;
+}
+.convertionFailMessages{
+    color: crimson;
+}

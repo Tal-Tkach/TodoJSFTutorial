@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- global_contract/todo.xhtml -->
+<!-- JSF page that displays the current time on the web server -->
+
+<html xmlns="http://www.w3c.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+<h:head>    
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <h:outputStylesheet library="css" name="app.css"/>
+    <title>TO-DO application</title>
+</h:head>
+<h:body> 
+    <div>
+        <div class="myClass">List of TO-DO items</div>
+        <h:dataTable value="#{todoGlobalService.allTodo}" var="item">
+            <h:column>
+                <f:facet name="header"> Message</f:facet>
+                #{item.message}
+            </h:column>
+            <h:column>
+                <f:facet name="header"> Priority</f:facet>
+                #{item.priority}
+            </h:column>
+        </h:dataTable>       
+    </div>
+      
+    <div>          
+        <div>Add new to-do item:</div>
+        <h:form>
+            <h:outputLabel for="message" value="Message: "/>
+            <h:inputText id="message" value="#{todoGlobalService.todo.message}"/>
+            <h:outputLabel for="priority" value="Priority: "/>
+            <h:inputText id="priority" value="#{todoGlobalService.todo.priority}"
+                         converterMessage="Please enter digits only."/>
+            <h:commandButton value="Save" action="#{todoGlobalService.save}"/>
+        </h:form>        
+    </div>
+</h:body>
+</html>

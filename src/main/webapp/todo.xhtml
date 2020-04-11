@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- todo.xhtml -->
+<!-- JSF page that displays the current time on the web server -->
+
+<html xmlns="http://www.w3c.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+<h:head>    
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <h:outputStylesheet library="css" name="session.css"/>
+    <h:outputScript library="js" name="hello.js"/>
+    <title>TO-DO application</title>
+</h:head>
+<h:body> 
+    <div>       
+        <h:graphicImage value="resources/images/java.jfif"/>     
+        <div class="myClass">List of TO-DO items</div>
+        <h:outputLabel value="Changes count for message field: #{todoService.messageChanges}"/>
+        <h:dataTable value="#{todoService.allTodo}" var="item">
+            <h:column>
+                <f:facet name="header"> Message</f:facet>
+                #{item.message}
+            </h:column>
+            <h:column>
+                <f:facet name="header"> Priority</f:facet>
+                #{item.priority}
+            </h:column>
+        </h:dataTable>       
+    </div>
+      
+    <div>          
+        <div>Add new to-do item:</div>
+        <h:form>
+            <h:outputLabel for="message" value="Message: "/>
+            <h:inputText id="message" value="#{todoService.todo.message}" onchange="submit()"
+                         valueChangeListener="#{todoService.increaseMessageChanges}"
+                         validatorMessage="Message must start with a capital letter">
+                <f:validateRegex pattern="^[A-Z].*"/>
+            </h:inputText>
+            <h:message class="validationMessage" for="message"/>
+            <h:outputLabel for="priority" value="Priority: "/>
+            <h:inputText id="priority" value="#{todoService.todo.priority}"
+                         converterMessage="Please enter digits only.">
+                <f:converter converterId="javax.faces.Integer" />
+            </h:inputText>
+            <h:message class="convertionFailMessages" for="priority"/>
+            <h:commandButton value="Save" action="#{todoService.save}"/>
+        </h:form>        
+    </div>
+    <div>
+        <h:commandButton value="Say Hello" onclick="showMessage();"/>
+    </div>
+</h:body>
+</html>
